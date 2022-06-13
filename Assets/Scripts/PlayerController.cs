@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float JumpForce = 20f;
     public bool jump;
     public Rigidbody2D rb;
+    bool facingRight = true;
+
 
     void Update()
     {
@@ -23,6 +25,21 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, JumpForce * MoveY);
             jump = true;
         }
+        if(MoveX<0 && facingRight) //If player is moving left and facing right, player will flip left
+        {
+            flip();
+        }
+        if(MoveX>0 && !facingRight) // If player is moving right and not facing right, player will flip right
+        {
+            flip();
+        }
+    }
+
+    void flip()
+    {
+        facingRight = !facingRight;
+        transform.Rotate(new Vector3(0, 180, 0));
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
