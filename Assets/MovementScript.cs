@@ -6,15 +6,65 @@ public class MovementScript : MonoBehaviour
 {
     private Vector3 p_position;
     private float p_power = 40f;
+    private Animator p_anim;
     // Start is called before the first frame update
     void Start()
     {
-
+        p_anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        p_anim.SetFloat("Run", 0);
+        p_anim.SetFloat("Walk", 0);
+        p_anim.SetFloat("Shoot", 0);
+        if (Input.GetKey(KeyCode.W))
+        {
+            this.transform.Translate(Vector3.forward * 10f * Time.deltaTime);
+            p_anim.SetFloat("Walk", 1f);
+            p_anim.SetFloat("Run", 0);
+            p_anim.SetFloat("Shoot", 0);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            this.transform.Rotate(Vector3.up * 50f * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            this.transform.Rotate(Vector3.up * -50f * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            this.transform.Translate(Vector3.forward * -10f * Time.deltaTime);
+            p_anim.SetFloat("Walk", 0.5f);
+            p_anim.SetFloat("Run", 0);
+            p_anim.SetFloat("Shoot", 0);
+        }
+
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
+        {
+            this.transform.Translate(Vector3.forward * 20f * Time.deltaTime);
+            p_anim.SetFloat("Run", 1f);
+            p_anim.SetFloat("Walk", 0);
+            p_anim.SetFloat("Shoot", 0);
+        }
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.LeftShift))
+        {
+            this.transform.Translate(Vector3.forward * -20f * Time.deltaTime);
+            p_anim.SetFloat("Run", 0.5f);
+            p_anim.SetFloat("Walk", 0);
+            p_anim.SetFloat("Shoot", 0);
+        }
+        if(Input.GetMouseButton(0))
+        {
+            p_anim.SetFloat("Shoot", 1f);
+            p_anim.SetFloat("Walk", 0);
+            p_anim.SetFloat("Run", 0);
+        }
+
+
+        #region JumpFlight
         p_position = this.transform.position + new Vector3(10f, 10f, 10f);
         if (p_power > 0)
         {
@@ -47,5 +97,6 @@ public class MovementScript : MonoBehaviour
             p_power = p_power + 0.1f;
         }
         Debug.Log(p_power);
+        #endregion
     }
 }
