@@ -58,7 +58,7 @@ public class MovementScript : MonoBehaviour
         }
         if(Input.GetMouseButton(0))
         {
-            p_anim.SetFloat("Shoot", 1f);
+            p_anim.SetFloat("Shoot", 1);
             p_anim.SetFloat("Walk", 0);
             p_anim.SetFloat("Run", 0);
         }
